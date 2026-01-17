@@ -1,0 +1,1 @@
+Guardrails for the current task. Dies when the task is done. Not persisted.
