@@ -127,3 +127,75 @@ export {
   getTemperatureExplanation,
   getAllEducationalContent,
 } from './cycle-explainer';
+
+// ============================================
+// RINSE AID GUIDE
+// ============================================
+
+export type {
+  RinseAidSetting,
+  ItemCategory,
+  SpotCause,
+  RinseAidInput,
+  RinseAidRecommendation,
+  RinseAidExplanation,
+  SpotDiagnosis,
+} from './rinse-aid-guide';
+
+export {
+  getRinseAidRecommendation,
+  getRinseAidExplanation,
+  getDryingTips,
+  getRinseAidSettings,
+  diagnoseSpotIssue,
+} from './rinse-aid-guide';
+
+// ============================================
+// WATER HARDNESS HELPER
+// ============================================
+
+export type {
+  SudsAmount,
+  WaterClarity,
+  Confidence,
+  WaterHardnessTest,
+  TestResult,
+  HardnessRecommendations,
+  CityHardnessResult,
+  HardnessExplanation,
+  SymptomEstimate,
+} from './water-hardness-helper';
+
+export {
+  getWaterHardnessTest,
+  interpretTestResult,
+  getHardnessRecommendations,
+  getAustralianCityHardness,
+  getHardnessExplanation,
+  getAllHardnessLevels,
+  estimateHardnessFromSymptoms,
+} from './water-hardness-helper';
+
+// ============================================
+// QUICK START GUIDE
+// ============================================
+
+export type {
+  QuickStartSection,
+  QuickStartGuide,
+  OnboardingStep,
+  QuickWin,
+  Mistake,
+  ActionPlan,
+  WashPhase,
+  DishwasherBasics,
+} from './quick-start-guide';
+
+export {
+  getQuickStartGuide,
+  getOnboardingSteps,
+  getQuickWin,
+  getTopMistakes,
+  getImmediateActionPlan,
+  getDishwasherBasics,
+} from './quick-start-guide';
