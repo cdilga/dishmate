@@ -1,7 +1,10 @@
 // Dishmate - Smart Dishwasher Load Advisor and Troubleshooter
 // MVP Decision Trees for optimal dishwasher usage
 
-// Types
+// ============================================
+// TYPES
+// ============================================
+
 export type {
   ItemType,
   SoilType,
@@ -20,7 +23,10 @@ export type {
   PreRinseAdvice,
 } from './types';
 
-// Load Advisor
+// ============================================
+// LOAD ADVISOR
+// ============================================
+
 export {
   getLoadRecommendation,
   calculateSoilScore,
@@ -32,7 +38,10 @@ export {
   generateReasoning,
 } from './load-advisor';
 
-// Troubleshooter
+// ============================================
+// TROUBLESHOOTER
+// ============================================
+
 export {
   TROUBLESHOOT_CATEGORIES,
   getInitialQuestion,
@@ -41,7 +50,10 @@ export {
   getSolution,
 } from './troubleshooter';
 
-// Pre-Rinse Guide
+// ============================================
+// PRE-RINSE GUIDE
+// ============================================
+
 export {
   getPreRinseGuide,
   getWhatToLeave,
@@ -50,3 +62,68 @@ export {
   shouldScrapeItem,
   shouldLeaveItem,
 } from './prerinse-guide';
+
+// ============================================
+// DETERGENT ADVISOR
+// ============================================
+
+export type {
+  DetergentFormat,
+  UsagePattern,
+  MainConcern,
+  DetergentInput,
+  DetergentRecommendation,
+} from './detergent-advisor';
+
+export {
+  getDetergentRecommendation,
+  getDetergentFormatInfo,
+  getAllDetergentFormats,
+  compareFormats,
+  getWhyPowderBeatsPods,
+} from './detergent-advisor';
+
+// ============================================
+// MAINTENANCE GUIDE
+// ============================================
+
+export type {
+  MaintenanceTask,
+  Frequency,
+  MaintenanceTaskInfo,
+  MaintenanceSchedule,
+  MaintenanceInput,
+  MaintenanceCheck,
+} from './maintenance-guide';
+
+export {
+  generateMaintenanceSchedule,
+  getMaintenanceTask,
+  getAllMaintenanceTasks,
+  getTasksByImportance,
+  getCriticalTasks,
+  quickMaintenanceCheck,
+} from './maintenance-guide';
+
+// ============================================
+// CYCLE EXPLAINER
+// ============================================
+
+export type {
+  CycleInfo,
+  CycleComparison,
+  CycleSelectionGuide,
+  CycleEducation,
+} from './cycle-explainer';
+
+export {
+  getCycleInfo,
+  getAllCycles,
+  compareCycles,
+  getCycleForSoilType,
+  getCycleForItemType,
+  getEnzymeExplanation,
+  getPrewashExplanation,
+  getTemperatureExplanation,
+  getAllEducationalContent,
+} from './cycle-explainer';
