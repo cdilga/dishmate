@@ -1,0 +1,1 @@
+Guardrails for the whole project. Applies across runs, between workers, ralph loops, persisted and checked in.
