@@ -1,4 +1,4 @@
-import { readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync, existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { join } from 'node:path';
 
@@ -14,7 +14,12 @@ function getGzipSize(filePath) {
 let totalJsGzip = 0;
 let failed = false;
 
-const files = readdirSync(ASSETS_DIR);
+const files = existsSync(ASSETS_DIR) ? readdirSync(ASSETS_DIR) : [];
+
+if (files.length === 0) {
+  console.log(`Warning: No files found in ${ASSETS_DIR}. Run npm run build:demo first.`);
+  process.exit(0);
+}
 
 console.log('Bundle size report:');
 console.log('='.repeat(60));
