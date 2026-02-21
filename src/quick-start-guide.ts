@@ -63,30 +63,30 @@ export function getQuickStartGuide(): QuickStartGuide {
     subtitle: 'Three changes that make an immediate difference',
     sections: [
       {
-        title: 'The Pre-Wash Secret',
+        title: '1. Switch From Pods to Powder (Why This Matters)',
         content: [
-          'Your dishwasher runs a pre-wash before opening the detergent dispenser.',
-          'Pods sit closed during this phase - plain water fails to cut grease.',
-          'Put 1 tablespoon of powder loose in the door before closing.',
-          'This single change fixes most "dishes not clean" problems.',
+          'Pods come in a fixed size - you get the same dose whether you\'re washing two wine glasses or a full load of greasy roasting trays.',
+          'With powder, YOU control the amount: less for light loads, more for heavy soil or hard water.',
+          'Even better: your dishwasher runs a PRE-WASH before opening the dispenser. Pods sit there doing nothing while plain water fails to cut grease.',
+          'Put 1 tablespoon of powder loose in the door before closing. This single change fixes most "dishes not clean" problems.',
         ],
       },
       {
-        title: 'Stop Pre-Rinsing',
+        title: '2. Run Hot Water First (Critical in Winter)',
+        content: [
+          'Before starting the dishwasher, run your kitchen hot tap for 30 seconds until the water feels hot.',
+          'Many dishwashers connect to the hot water line, but if your tank is far from the kitchen, the initial water is cold.',
+          'Cold water won\'t dissolve powder properly and makes the pre-wash phase useless.',
+          'This 30-second step ensures your detergent works immediately instead of waiting for the machine to heat cold water.',
+        ],
+      },
+      {
+        title: '3. Stop Pre-Rinsing',
         content: [
           'Don\'t rinse dishes before loading - just scrape off large chunks.',
           'Enzymes in detergent NEED food residue to work on.',
           'Pre-rinsing wastes 20+ litres of water per load.',
           'Dried-on food is fine - enzymes break it down regardless.',
-        ],
-      },
-      {
-        title: 'Use the Right Cycle',
-        content: [
-          'Quick cycle is only for water-marked glasses.',
-          'Eco cycle is best for everyday dishes - enzymes need time.',
-          'Normal cycle for mixed loads with some grease.',
-          'Intensive only for baked-on, burnt, or very greasy items.',
         ],
       },
     ],
@@ -101,39 +101,39 @@ export function getOnboardingSteps(): OnboardingStep[] {
   return [
     {
       stepNumber: 1,
-      title: 'Switch to Powder',
-      action: 'Buy powder detergent instead of pods. Any supermarket brand works.',
-      whyItMatters: 'Powder lets you use the pre-wash phase that pods waste completely.',
+      title: 'Run Hot Water First',
+      action: 'Turn on your kitchen hot tap and let it run for 30 seconds until the water feels hot.',
+      whyItMatters: 'If your hot water tank is far from the kitchen, the initial water in the pipes is cold. Cold water won\'t dissolve detergent properly and makes the pre-wash useless.',
     },
     {
       stepNumber: 2,
-      title: 'Add Pre-Wash Detergent',
-      action: 'Put 1 tablespoon of powder loose in the door or tub floor before closing.',
-      whyItMatters: 'This dissolves during pre-wash, tackling grease before it can spread.',
+      title: 'Switch to Powder (Not Pods)',
+      action: 'Buy powder detergent instead of pods. Any supermarket brand works.',
+      whyItMatters: 'Pods waste the pre-wash phase AND give you a fixed dose regardless of load size. Powder lets you use less for light loads, more for heavy ones - you control the amount.',
     },
     {
       stepNumber: 3,
-      title: 'Fill the Dispenser',
-      action: 'Put 1.5-2 tablespoons in the dispenser compartment.',
-      whyItMatters: 'Fresh detergent for the main wash finishes the cleaning job.',
+      title: 'Add Pre-Wash Detergent',
+      action: 'Put 1 tablespoon of powder loose in the door or tub floor before closing.',
+      whyItMatters: 'This dissolves during pre-wash, tackling grease before it can spread. Pods can\'t do this - they\'re trapped in the closed dispenser.',
     },
     {
       stepNumber: 4,
+      title: 'Fill the Dispenser',
+      action: 'Put 1.5-2 tablespoons in the dispenser compartment.',
+      whyItMatters: 'Fresh detergent for the main wash finishes the cleaning job. Adjust this amount based on how dirty your dishes are - you can\'t do this with pods.',
+    },
+    {
+      stepNumber: 5,
       title: 'Stop Pre-Rinsing',
       action: 'Scrape large chunks into the bin. Load everything else as-is.',
       whyItMatters: 'Enzymes need food residue to work. Rinsing removes what they need.',
     },
     {
-      stepNumber: 5,
+      stepNumber: 6,
       title: 'Choose the Right Cycle',
       action: 'Use Eco for most loads, Normal for greasy dishes.',
       whyItMatters: 'Longer cycles give enzymes time to break down food properly.',
-    },
-    {
-      stepNumber: 6,
-      title: 'Run Hot Water First (Optional)',
-      action: 'Run your kitchen hot tap for 30 seconds before starting the dishwasher.',
-      whyItMatters: 'Many dishwashers connect to cold water and heat it internally. If your hot water tank is far from the kitchen, the initial water may be cold. Running the tap first ensures hot water reaches the machine sooner, helping powder dissolve and improving the pre-wash phase.',
     },
   ];
 }
@@ -145,9 +145,9 @@ export function getOnboardingSteps(): OnboardingStep[] {
 export function getQuickWin(): QuickWin {
   return {
     title: 'The One Change That Fixes Most Problems',
-    description: 'Add pre-wash detergent. That\'s it. This single technique solves greasy dishes, food residue, and poor cleaning for the majority of users.',
-    howTo: 'Put 1 tablespoon of powder loose in the door or on the tub floor before you close the door. Then add 1.5-2 tablespoons in the dispenser as normal. Run Normal or Eco cycle.',
-    expectedResult: 'Your greasy dishes will come out clean. The grease that used to remain will be broken down during pre-wash instead of spreading around.',
+    description: 'Use powder detergent with pre-wash dosing. Unlike pods (fixed size, no pre-wash), powder lets you adjust the amount based on your load and actually works during the pre-wash phase.',
+    howTo: 'First, run your kitchen hot tap for 30 seconds. Then put 1 tablespoon of powder loose in the door or on the tub floor before closing. Add 1.5-2 tablespoons in the dispenser. Use less for light loads, more for heavy/greasy loads.',
+    expectedResult: 'Greasy dishes come out clean because detergent works during pre-wash. Plus you save money by using only what you need instead of wasting a full pod on light loads.',
   };
 }
 

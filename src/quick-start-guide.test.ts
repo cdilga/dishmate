@@ -65,10 +65,16 @@ describe('Quick Start Guide', () => {
       });
     });
 
-    it('first step is about switching detergent format', () => {
+    it('first step is about running hot water first', () => {
       const steps = getOnboardingSteps();
       const firstStep = steps[0];
-      expect(firstStep.action.toLowerCase()).toMatch(/powder|detergent/);
+      expect(firstStep.title.toLowerCase()).toMatch(/hot water|tap/);
+    });
+
+    it('second step is about switching to powder', () => {
+      const steps = getOnboardingSteps();
+      const secondStep = steps[1];
+      expect(secondStep.title.toLowerCase()).toMatch(/powder|detergent/);
     });
 
     it('includes the pre-wash technique', () => {
