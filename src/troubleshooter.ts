@@ -113,7 +113,7 @@ const SOLUTIONS: Record<string, TroubleshootSolution> = {
     summary: 'Powder residue is being left behind.',
     steps: [
       'REDUCE AMOUNT: You might be using too much. Start with 1-1.5 tablespoons and adjust.',
-      'CHECK WATER TEMP: Cold water doesn\'t dissolve powder well. Run hot tap before starting.',
+      'CHECK WATER TEMP: Cold water doesn\'t dissolve powder well. Run the kitchen hot tap for 30 seconds before starting so warm water reaches the machine. This matters more if your hot water tank is far from the kitchen, or in the US where 120V heating elements are slower than Australian 240V ones.',
       'CHECK SPRAY ARMS: Remove and clean spray arms - blocked holes mean less rinsing power.',
       'ADD RINSE AID: Helps water sheet off and takes residue with it.',
     ],

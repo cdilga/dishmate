@@ -407,8 +407,10 @@ export function getWhyPowderBeatsPods(): PowderVsPodsExplanation {
       {
         title: 'Adjustable Dosing',
         explanation: 'Pods give you one fixed dose regardless of load size, soil level, or water hardness. ' +
+          'Two wine glasses get the same dose as a full load of greasy roasting trays. ' +
           'Powder lets you use less for light loads (saving money) and more for heavy loads or hard water ' +
-          '(getting cleaner dishes). This flexibility means better results and less waste.',
+          '(getting cleaner dishes). This flexibility means better results and less waste. ' +
+          'In hard water areas the fixed pod dose is often not enough, leading to residue and poor cleaning.',
       },
       {
         title: 'Better Enzymes',

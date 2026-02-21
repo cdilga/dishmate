@@ -452,6 +452,8 @@ export function getTemperatureExplanation(): CycleEducation {
 - Can damage plastics
 - Reserved for hygiene needs
 
+Hot water supply tip: Most dishwashers have an internal heating element, but the initial fill water temperature matters. In Australia (240V), heating elements are powerful and heat water quickly. In the US (120V), elements are weaker and benefit more from a hot water supply. If your dishwasher is far from the hot water tank, running the kitchen hot tap for 30 seconds before starting can help - the first fill gets warm water instead of cold, improving powder dissolution and the pre-wash phase. Most modern machines don't strictly need this, but it can help if you notice powder residue or poor pre-wash performance.
+
 The takeaway: Higher temperature isn't always better. For everyday dishes, moderate temps with good enzyme time often clean better than short, hot cycles.`,
     keyTakeaway: 'Match the temperature to your soil type. Protein needs time (Eco), baked-on needs heat (Intensive).',
   };

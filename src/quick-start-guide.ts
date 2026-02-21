@@ -129,6 +129,12 @@ export function getOnboardingSteps(): OnboardingStep[] {
       action: 'Use Eco for most loads, Normal for greasy dishes.',
       whyItMatters: 'Longer cycles give enzymes time to break down food properly.',
     },
+    {
+      stepNumber: 6,
+      title: 'Run Hot Water First (Optional)',
+      action: 'Run your kitchen hot tap for 30 seconds before starting the dishwasher.',
+      whyItMatters: 'Many dishwashers connect to cold water and heat it internally. If your hot water tank is far from the kitchen, the initial water may be cold. Running the tap first ensures hot water reaches the machine sooner, helping powder dissolve and improving the pre-wash phase.',
+    },
   ];
 }
 
@@ -158,8 +164,8 @@ export function getTopMistakes(): Mistake[] {
     },
     {
       mistake: 'Using pods for all loads',
-      whyItsWrong: 'Pods can\'t provide detergent during the pre-wash phase. Grease spreads instead of being cleaned.',
-      whatToDoInstead: 'Switch to powder. Add some loose in the door for pre-wash, rest in the dispenser.',
+      whyItsWrong: 'Pods can\'t provide detergent during the pre-wash phase, and they give a fixed dose regardless of load size or soil level. Two glasses get the same dose as a full greasy load.',
+      whatToDoInstead: 'Switch to powder. Add some loose in the door for pre-wash, rest in the dispenser. Adjust the amount based on how dirty your dishes are.',
     },
     {
       mistake: 'Using Quick cycle for everything',
@@ -190,6 +196,7 @@ export function getImmediateActionPlan(): ActionPlan {
       'Put 1.5 tablespoons in the dispenser',
       'Run Normal or Eco cycle (not Quick)',
       'Don\'t rinse dishes - just scrape large chunks',
+      'Optional: run the hot tap for 30 seconds before starting to ensure warm water reaches the machine',
     ],
     thisWeek: [
       'Buy powder detergent if you\'re using pods',

@@ -52,7 +52,7 @@ describe('Quick Start Guide', () => {
     it('returns numbered steps for new users', () => {
       const steps = getOnboardingSteps();
       expect(steps.length).toBeGreaterThan(0);
-      expect(steps.length).toBeLessThanOrEqual(5); // Keep it simple
+      expect(steps.length).toBeLessThanOrEqual(6); // Keep it simple
     });
 
     it('each step has required fields', () => {
