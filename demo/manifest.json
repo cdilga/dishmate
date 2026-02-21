@@ -1,0 +1,16 @@
+{
+  "name": "Dishmate",
+  "short_name": "Dishmate",
+  "description": "Smart dishwasher decision trees for cleaner dishes",
+  "start_url": "/dishmate/",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -8,18 +8,27 @@
     "dev": "vite",
     "build": "tsc",
     "build:demo": "vite build",
+    "build:demo:report": "BUNDLE_REPORT=1 vite build",
+    "check-bundle": "node scripts/check-bundle-size.js",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["dishwasher", "decision-tree", "cleaning"],
+  "keywords": [
+    "dishwasher",
+    "decision-tree",
+    "cleaning"
+  ],
   "author": "",
   "license": "ISC",
   "description": "Smart dishwasher load advisor and troubleshooter",
   "devDependencies": {
     "@types/node": "^25.0.9",
+    "fast-check": "^4.5.3",
+    "rollup-plugin-visualizer": "^6.0.5",
     "typescript": "^5.9.3",
+    "vite-plugin-pwa": "^1.2.0",
     "vitest": "^3.2.4"
   }
 }
