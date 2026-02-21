@@ -25,6 +25,7 @@ import {
   getHardnessRecommendations,
   getAustralianCityHardness,
   getAllHardnessLevels,
+  getHardnessExplanation,
   // Maintenance
   generateMaintenanceSchedule,
   getAllMaintenanceTasks,
