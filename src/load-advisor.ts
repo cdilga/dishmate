@@ -36,7 +36,7 @@ export function calculateSoilScore(soilTypes: SoilType[]): number {
 
 export function calculateGreaseFactor(soilTypes: SoilType[]): GreaseFactor {
   if (soilTypes.includes('greasy')) return 'high';
-  if (soilTypes.includes('protein')) return 'medium';
+  if (soilTypes.includes('protein') || soilTypes.includes('heavy')) return 'medium';
   return 'low';
 }
 
@@ -143,6 +143,7 @@ export function calculateDosing(
   if (cycle === 'quick') {
     let mainDose = 1;
     if (waterHardness === 'hard') mainDose *= 1.5;
+    else if (waterHardness === 'soft') mainDose *= 0.75;
     if (quantity === 'light') mainDose *= 0.75;
     if (quantity === 'full') mainDose *= 1.25;
     return {
@@ -164,10 +165,13 @@ export function calculateDosing(
     mainDose *= 1.25;
   }
 
-  // Hard water adjustments (+50% to both)
+  // Water hardness adjustments
   if (waterHardness === 'hard') {
     prewashDose *= 1.5;
     mainDose *= 1.5;
+  } else if (waterHardness === 'soft') {
+    prewashDose *= 0.75;
+    mainDose *= 0.75;
   }
 
   return {
@@ -208,6 +212,7 @@ export function getPrerinseAdvice(soilTypes: SoilType[]): string {
 // ============================================
 
 const ITEM_TIPS: Record<string, string> = {
+  plates: 'Face plates toward the centre for best water coverage',
   glasses: 'Angle glasses between tines, not over them',
   bowls: 'Face bowls toward centre, angled down',
   pots: 'Place pots and pans on bottom rack, angled for water access',
@@ -217,6 +222,7 @@ const ITEM_TIPS: Record<string, string> = {
   utensils: 'Mix utensil handles up and down to prevent nesting',
   mugs: 'Place mugs at an angle to prevent water pooling',
   cutting_boards: "Place cutting boards on sides, don't lay flat",
+  delicate: "Ensure delicate items aren't touching - space prevents chipping",
 };
 
 export function getLoadingTips(items: ItemType[], quantity: LoadQuantity): string[] {
@@ -302,6 +308,10 @@ export function getLoadRecommendation(input: LoadInput): Recommendation {
 
   if (calc.hasAcidicRisk) {
     warnings.push('Run soon to prevent staining from acidic foods.');
+  }
+
+  if (cycle === 'sanitise' && calc.soilScore >= 4) {
+    warnings.push('Sanitise cycle\'s high heat can bake on heavy/greasy residue. Consider running an intensive wash first or manually pre-cleaning heavily soiled items.');
   }
 
   // Calculate dosing

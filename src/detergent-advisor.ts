@@ -259,6 +259,8 @@ function getUsageInstructions(format: DetergentFormat, waterHardness: WaterHardn
 
     if (waterHardness === 'hard') {
       instructions.push('HARD WATER: Increase both doses by 50% (so about 2 tbsp pre-wash, 3 tbsp main).');
+    } else if (waterHardness === 'soft') {
+      instructions.push('SOFT WATER: Reduce both doses by about 25% to prevent over-sudsing and glass etching. Start with 0.75 tbsp pre-wash and 1-1.5 tbsp main.');
     }
 
     if (heavySoil) {

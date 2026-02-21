@@ -317,6 +317,70 @@ const SOLUTIONS: Record<string, TroubleshootSolution> = {
     ],
   },
 
+  // "Other" branch solutions
+  strange_noises: {
+    title: 'Strange Noises During Cycle',
+    summary: 'Unusual sounds usually point to something loose or obstructed.',
+    steps: [
+      'CHECK FOR LOOSE ITEMS: A utensil or small item may have fallen through the rack and is hitting the spray arm.',
+      'SPIN THE SPRAY ARM: Open the door and spin it by hand. It should rotate freely without catching.',
+      'CHECK THE PUMP AREA: Look at the bottom of the tub for debris (glass, bones, seeds) that could be rattling in the pump.',
+      'LISTEN TO THE TYPE: Grinding = debris in pump. Rattling = loose item. Humming = normal motor. Knocking = spray arm hitting something.',
+    ],
+    tips: [
+      'A brief humming at the start is normal - that\'s the drain pump clearing old water.',
+      'If the noise is new and loud, stop the cycle and check before running again.',
+    ],
+  },
+
+  cycle_too_long: {
+    title: 'Cycle Taking Too Long',
+    summary: 'Modern cycles are longer than you might expect, but some issues can extend them further.',
+    steps: [
+      'CHECK WHICH CYCLE: Eco cycles run 2-3 hours by design. Normal is 1-1.5 hours. Check you haven\'t accidentally selected Eco.',
+      'CHECK WATER TEMPERATURE: If incoming water is cold, the machine spends extra time heating it. Run the kitchen hot tap for 30 seconds before starting.',
+      'CHECK FOR ERROR PAUSES: Some machines pause mid-cycle if water isn\'t draining properly. Listen for periods of silence.',
+      'CLEAN THE FILTER: A clogged filter can cause the machine to run extra rinse cycles to compensate.',
+    ],
+    tips: [
+      'Eco cycles are meant to be long - that\'s how they save energy while still cleaning well.',
+      'If a Normal cycle takes more than 2 hours, something may be wrong with the heating element or water supply.',
+    ],
+  },
+
+  wont_start: {
+    title: 'Machine Won\'t Start',
+    summary: 'Check these common causes before calling for service.',
+    steps: [
+      'CHECK THE DOOR LATCH: The door must click fully shut. Most machines won\'t start with a loose door.',
+      'CHECK POWER: Is the machine plugged in? Has the circuit breaker tripped? Try another appliance in the same outlet.',
+      'CHECK WATER SUPPLY: The tap feeding the dishwasher must be turned on. It\'s usually under the sink.',
+      'CHECK FOR ERROR CODES: Look at the display panel for flashing lights or error codes. Check your manual for what they mean.',
+      'TRY A RESET: Turn the machine off at the wall for 60 seconds, then turn it back on. This clears many electronic glitches.',
+    ],
+    tips: [
+      'Child lock is a common culprit - check if yours is accidentally enabled.',
+      'If the machine hums but doesn\'t fill with water, the water inlet valve may be blocked or faulty.',
+    ],
+  },
+
+  water_leaking: {
+    title: 'Water Leaking',
+    summary: 'Leaks need prompt attention to prevent floor damage.',
+    steps: [
+      'IDENTIFY THE SOURCE: Is water coming from the door, underneath, or the hose connections at the back?',
+      'DOOR LEAKS: Check the door seal/gasket for cracks, food debris, or damage. Clean it with a damp cloth.',
+      'BOTTOM LEAKS: This could be a hose connection, pump seal, or tub crack. Check under the machine if accessible.',
+      'CHECK DETERGENT: Too much detergent or the wrong type (hand dishwashing liquid) causes excess suds that leak from the door.',
+      'CHECK LOADING: Tall items can deflect water toward the door seal, causing drips.',
+    ],
+    tips: [
+      'NEVER use hand dishwashing liquid in a dishwasher - it creates massive suds and will leak everywhere.',
+      'A small amount of water under the door after opening is normal condensation, not a leak.',
+      'If the leak is from underneath the machine, turn off water supply and call for service.',
+    ],
+  },
+
   // Cloudy glasses solutions
   cloudy_etching: {
     title: 'Glass Etching (Permanent Damage)',
@@ -592,6 +656,12 @@ const ANSWER_TO_SOLUTION: Record<string, string> = {
   // Greasy
   'greasy_feeling_start:pods': 'greasy_dishes',
   'greasy_feeling_start:powder': 'greasy_dishes',
+
+  // Other
+  'other_start:noises': 'strange_noises',
+  'other_start:too_long': 'cycle_too_long',
+  'other_start:wont_start': 'wont_start',
+  'other_start:leaking': 'water_leaking',
 };
 
 // ============================================

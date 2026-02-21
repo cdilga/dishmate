@@ -98,7 +98,7 @@ const CYCLE_INFO: Record<CycleType, CycleInfo> = {
     enzymeFriendly: true,
     energyUsage: 'low',
     waterUsage: 'low',
-    detergentNotes: 'Add 1 tablespoon pre-wash detergent in the door, 1.5 tablespoons in the dispenser. Enzymes work best in this cycle.',
+    detergentNotes: 'Add 0.5-1 tablespoon pre-wash detergent in the door (more for greasy loads), 1.5 tablespoons in the dispenser. Enzymes work best in this cycle.',
   },
 
   normal: {

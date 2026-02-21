@@ -46,16 +46,48 @@ import type {
   MainConcern,
 } from 'dishmate';
 
-// Tab navigation
+// Tab navigation with persistence
+const TAB_STORAGE_KEY = 'dishmate-active-tab';
+
+function activateTab(tabId: string): void {
+  document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach((p) => p.classList.remove('active'));
+
+  const tab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+  if (tab) {
+    tab.classList.add('active');
+    document.getElementById(tabId)?.classList.add('active');
+    localStorage.setItem(TAB_STORAGE_KEY, tabId);
+    window.location.hash = tabId;
+  }
+}
+
 document.querySelectorAll('.tab').forEach((tab) => {
   tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach((p) => p.classList.remove('active'));
-
-    tab.classList.add('active');
     const panelId = (tab as HTMLElement).dataset.tab!;
-    document.getElementById(panelId)?.classList.add('active');
+    activateTab(panelId);
   });
+});
+
+// Restore tab state on page load
+function restoreTabState(): void {
+  // Priority: URL hash > localStorage > default (first tab)
+  const hash = window.location.hash.slice(1);
+  const storedTab = localStorage.getItem(TAB_STORAGE_KEY);
+
+  if (hash && document.getElementById(hash)) {
+    activateTab(hash);
+  } else if (storedTab && document.getElementById(storedTab)) {
+    activateTab(storedTab);
+  }
+}
+
+// Handle browser back/forward for hash changes
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.slice(1);
+  if (hash && document.getElementById(hash)) {
+    activateTab(hash);
+  }
 });
 
 // ============================================
@@ -347,12 +379,13 @@ function renderDetergent(): void {
     <div class="section">
       <h3>🏆 Why Powder Beats Pods</h3>
       <div class="tip">
-        <p><strong>${powderAdvantage.title}</strong></p>
+        <p><strong>${powderAdvantage.headline}</strong></p>
         <p>${powderAdvantage.summary}</p>
         <h4>Key Points:</h4>
         <ul>
-          ${powderAdvantage.keyPoints.map((p) => `<li>${p}</li>`).join('')}
+          ${powderAdvantage.keyPoints.map((p) => `<li><strong>${p.title}</strong>: ${p.explanation}</li>`).join('')}
         </ul>
+        <p><em>${powderAdvantage.conclusion}</em></p>
       </div>
     </div>
 
@@ -446,7 +479,7 @@ function renderDetergent(): void {
 function renderRinseAid(): void {
   const container = document.getElementById('rinse-aid-content')!;
   const explanation = getRinseAidExplanation();
-  const tips = getDryingTips();
+  const tips = getDryingTips('mixed');
 
   container.innerHTML = `
     <div class="section">
@@ -486,16 +519,11 @@ function renderRinseAid(): void {
 
     <div class="section">
       <h3>Drying Tips</h3>
-      ${tips
-        .map(
-          (tip) => `
-        <div class="step">
-          <strong>${tip.tip}</strong>
-          <p>${tip.explanation}</p>
-        </div>
-      `
-        )
-        .join('')}
+      <div class="tip">
+        <ul>
+          ${tips.map((t) => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>
     </div>
   `;
 
@@ -537,11 +565,12 @@ function renderRinseAid(): void {
 function renderWaterHardness(): void {
   const container = document.getElementById('water-hardness-content')!;
   const test = getWaterHardnessTest();
-  const levels = getAllHardnessLevels();
+  const explanation = getHardnessExplanation();
+  const levels = Object.entries(explanation.hardnessScale);
 
   container.innerHTML = `
     <div class="section">
-      <h3>${test.title}</h3>
+      <h3>${test.name}</h3>
       <p>${test.description}</p>
       <h4>Steps:</h4>
       <ol>
@@ -570,11 +599,11 @@ function renderWaterHardness(): void {
       <h3>Hardness Levels Explained</h3>
       ${levels
         .map(
-          (level) => `
+          ([key, value]) => `
         <div class="result">
-          <h4>${level.level.charAt(0).toUpperCase() + level.level.slice(1)}</h4>
-          <p><strong>Range:</strong> ${level.range}</p>
-          <p>${level.description}</p>
+          <h4>${key.charAt(0).toUpperCase() + key.slice(1)}</h4>
+          <p><strong>Range:</strong> ${value.range}</p>
+          <p>${value.description}</p>
         </div>
       `
         )
@@ -593,12 +622,14 @@ function renderWaterHardness(): void {
       <div class="result">
         <h4>${result.city}</h4>
         <p><strong>Water Hardness:</strong> ${result.hardness.toUpperCase()}</p>
-        <p>${result.notes}</p>
+        ${result.ppmRange ? `<p><strong>PPM Range:</strong> ${result.ppmRange}</p>` : ''}
+        ${result.source ? `<p><strong>Source:</strong> ${result.source}</p>` : ''}
+        ${result.message ? `<p><em>${result.message}</em></p>` : ''}
         <h4>Recommendations:</h4>
         <ul>
-          <li><strong>Detergent:</strong> ${recs.detergentAmount}</li>
+          <li><strong>Detergent:</strong> ${recs.detergentAdjustment}</li>
           <li><strong>Rinse Aid:</strong> ${recs.rinseAidSetting}</li>
-          ${recs.saltNeeded ? `<li><strong>Salt:</strong> ${recs.saltRecommendation}</li>` : ''}
+          ${recs.useSalt ? `<li><strong>Salt:</strong> Recommended</li>` : ''}
         </ul>
       </div>
     `;
@@ -754,3 +785,6 @@ renderRinseAid();
 renderWaterHardness();
 renderMaintenance();
 renderCycles();
+
+// Restore tab state after all content is rendered
+restoreTabState();

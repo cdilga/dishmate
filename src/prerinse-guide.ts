@@ -109,7 +109,7 @@ const SCRAPE_PATTERNS = [
   /leaves/i,
   /large.*chunk/i,
   /big.*chunk/i,
-  /large.*piece/i,
+  /large\s+piece\s+of\s+(meat|vegetable|food)/i,
   /large.*food/i,
 ];
 

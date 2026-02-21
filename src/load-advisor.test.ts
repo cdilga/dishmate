@@ -52,6 +52,10 @@ describe('Load Advisor', () => {
       expect(calculateGreaseFactor(['protein'])).toBe('medium');
     });
 
+    it('returns medium for heavy soil', () => {
+      expect(calculateGreaseFactor(['heavy'])).toBe('medium');
+    });
+
     it('returns low for other soils', () => {
       expect(calculateGreaseFactor(['light'])).toBe('low');
       expect(calculateGreaseFactor(['everyday'])).toBe('low');
@@ -177,6 +181,14 @@ describe('Load Advisor', () => {
       expect(doses.prewashDose).toBe('1 tablespoon in the door');
       // 1.5 * 1.5 = 2.25 rounds to 2.5
       expect(doses.mainDose).toBe('2.5 tablespoons in dispenser');
+    });
+
+    it('reduces doses for soft water', () => {
+      const doses = calculateDosing(2, 'low', 'normal', 'normal', 'soft');
+      // 0.5 * 0.75 = 0.375 rounds to 0.5
+      expect(doses.prewashDose).toBe('0.5 tablespoons in the door');
+      // 1.5 * 0.75 = 1.125 rounds to 1
+      expect(doses.mainDose).toBe('1 tablespoon in dispenser');
     });
   });
 
