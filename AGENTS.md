@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Shared project instructions for all AI coding agents (Claude Code, Gemini CLI, etc.). This is the single source of truth — tool-specific files (`CLAUDE.md`, etc.) should reference this file rather than duplicating content.
+Shared project instructions for all AI coding agents (Claude Code, Gemini CLI, etc.). `CLAUDE.md` is a symlink to this file so every tool reads identical content.
 
 ## Commands
 
@@ -51,7 +51,7 @@ Each module follows the same pattern: types + decision logic + exported public A
 
 ## Guardrails
 
-- **Frontend work requires careful review** — whenever touching frontend code (HTML, CSS, UI rendering, `demo/main.ts`, `demo/index.html`), read the actual TypeScript types first to avoid accessing properties that don't exist. See `specs/PROJECT_GUARDRAILS.md`.
+- **Frontend work requires careful review** — whenever touching frontend code (HTML, CSS, UI rendering, `demo/main.ts`, `demo/index.html`), read the actual TypeScript types first to avoid accessing properties that don't exist. In Claude Code, invoke the `/frontend-designer` skill first. See `specs/PROJECT_GUARDRAILS.md`.
 - **Bundle budgets** — total JS gzipped must stay under 30KB. Run `npm run check-bundle` after demo builds.
 - **All tests must pass with no skips or warnings** before committing.
 
