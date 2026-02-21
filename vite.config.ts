@@ -8,7 +8,7 @@ export default defineConfig(async () => {
       registerType: 'autoUpdate',
       strategies: 'generateSW',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,json}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/.*\.(js|css|html)$/,
