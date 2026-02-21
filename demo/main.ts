@@ -41,6 +41,9 @@ import type {
   Urgency,
   WaterHardness,
   DiagnosisStep,
+  TroubleshootCategory,
+  UsagePattern,
+  MainConcern,
 } from 'dishmate';
 
 // Tab navigation
@@ -324,7 +327,7 @@ function renderTroubleshootCategories(): void {
   container.querySelectorAll('.option-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const category = (btn as HTMLElement).dataset.category!;
-      const step = getTroubleshootFlow(category as any);
+      const step = getTroubleshootFlow(category as TroubleshootCategory);
       troubleshootHistory = [];
       renderTroubleshootStep(step);
     });
@@ -380,15 +383,15 @@ function renderDetergent(): void {
       <label for="det-usage">Usage pattern:</label>
       <select id="det-usage">
         <option value="daily">Daily</option>
-        <option value="few_times_week">Few times a week</option>
-        <option value="weekly">Weekly</option>
+        <option value="regular">Regular (4-6/week)</option>
+        <option value="occasional">Occasional (1-3/week)</option>
       </select>
       <label for="det-concern">Main concern:</label>
       <select id="det-concern">
-        <option value="performance">Performance</option>
+        <option value="clean_dishes">Clean dishes</option>
         <option value="convenience">Convenience</option>
         <option value="cost">Cost</option>
-        <option value="environment">Environment</option>
+        <option value="eco">Environment</option>
       </select>
       <button class="primary" id="get-detergent-rec">Get Recommendation</button>
       <div id="detergent-result"></div>
@@ -400,24 +403,37 @@ function renderDetergent(): void {
       waterHardness: (document.getElementById('det-hardness') as HTMLSelectElement)
         .value as WaterHardness,
       usagePattern: (document.getElementById('det-usage') as HTMLSelectElement)
-        .value as any,
+        .value as UsagePattern,
       mainConcern: (document.getElementById('det-concern') as HTMLSelectElement)
-        .value as any,
+        .value as MainConcern,
+      typicalSoilTypes: ['everyday'],
     });
 
     document.getElementById('detergent-result')!.innerHTML = `
       <div class="result">
         <h4>Recommended: ${rec.recommendedFormat.toUpperCase()}</h4>
         <p>${rec.reasoning}</p>
-        <p><strong>Dosing:</strong></p>
-        <ul>
-          <li>Pre-wash: ${rec.dosing.prewash}</li>
-          <li>Main wash: ${rec.dosing.mainWash}</li>
-        </ul>
-        <h4>Tips:</h4>
-        <ul>
-          ${rec.tips.map((t) => `<li>${t}</li>`).join('')}
-        </ul>
+        ${
+          rec.usageInstructions.length > 0
+            ? `
+          <h4>Usage Instructions:</h4>
+          <ul>
+            ${rec.usageInstructions.map((t) => `<li>${t}</li>`).join('')}
+          </ul>
+        `
+            : ''
+        }
+        ${
+          rec.warnings && rec.warnings.length > 0
+            ? `
+          <h4>Warnings:</h4>
+          <ul>
+            ${rec.warnings.map((w) => `<li>${w}</li>`).join('')}
+          </ul>
+        `
+            : ''
+        }
+        ${rec.alternativeFormat ? `<p><em>Alternative: ${rec.alternativeFormat} - ${rec.alternativeReason}</em></p>` : ''}
       </div>
     `;
   });
@@ -435,7 +451,11 @@ function renderRinseAid(): void {
   container.innerHTML = `
     <div class="section">
       <h3>${explanation.title}</h3>
-      <p>${explanation.howItWorks}</p>
+      <p>${explanation.whatItIs}</p>
+      <h4>How it works:</h4>
+      <ul>
+        ${explanation.howItWorks.map((h) => `<li>${h}</li>`).join('')}
+      </ul>
       <h4>Benefits:</h4>
       <ul>
         ${explanation.benefits.map((b) => `<li>${b}</li>`).join('')}
@@ -450,12 +470,15 @@ function renderRinseAid(): void {
         <option value="moderate">Moderate</option>
         <option value="hard">Hard</option>
       </select>
-      <label for="ra-items">Main items washed:</label>
-      <select id="ra-items">
-        <option value="mixed">Mixed</option>
-        <option value="glasses">Mostly glasses</option>
-        <option value="plastics">Mostly plastics</option>
-        <option value="pots_pans">Pots & pans</option>
+      <label for="ra-spots">Spot issues?</label>
+      <select id="ra-spots">
+        <option value="no">No spots</option>
+        <option value="yes">Yes, spots on dishes</option>
+      </select>
+      <label for="ra-drying">Drying issues?</label>
+      <select id="ra-drying">
+        <option value="no">No drying issues</option>
+        <option value="yes">Yes, dishes still wet</option>
       </select>
       <button class="primary" id="get-rinse-aid-rec">Get Recommendation</button>
       <div id="rinse-aid-result"></div>
@@ -480,18 +503,28 @@ function renderRinseAid(): void {
     const rec = getRinseAidRecommendation({
       waterHardness: (document.getElementById('ra-hardness') as HTMLSelectElement)
         .value as WaterHardness,
-      mainItemType: (document.getElementById('ra-items') as HTMLSelectElement)
-        .value as any,
+      hasSpotIssues: (document.getElementById('ra-spots') as HTMLSelectElement).value === 'yes',
+      hasDryingIssues: (document.getElementById('ra-drying') as HTMLSelectElement).value === 'yes',
     });
 
     document.getElementById('rinse-aid-result')!.innerHTML = `
       <div class="result">
-        <h4>Recommended Setting: ${rec.setting}/5</h4>
+        <h4>Recommended Setting: ${rec.settingRecommendation.toUpperCase()}</h4>
         <p>${rec.reasoning}</p>
         <h4>Tips:</h4>
         <ul>
-          ${rec.tips.map((t) => `<li>${t}</li>`).join('')}
+          ${rec.usageTips.map((t) => `<li>${t}</li>`).join('')}
         </ul>
+        ${
+          rec.urgentActions && rec.urgentActions.length > 0
+            ? `
+          <h4>Urgent Actions:</h4>
+          <ul>
+            ${rec.urgentActions.map((a) => `<li>${a}</li>`).join('')}
+          </ul>
+        `
+            : ''
+        }
       </div>
     `;
   });
@@ -580,7 +613,15 @@ function renderMaintenance(): void {
   const container = document.getElementById('maintenance-content')!;
   const allTasks = getAllMaintenanceTasks();
   const critical = getCriticalTasks();
-  const schedule = generateMaintenanceSchedule({ includeOptional: true });
+  const schedule = generateMaintenanceSchedule({ waterHardness: 'moderate', loadsPerWeek: 5 });
+
+  // Group schedule tasks by adjusted frequency
+  const tasksByFrequency = new Map<string, typeof schedule.tasks>();
+  for (const entry of schedule.tasks) {
+    const freq = entry.adjustedFrequency;
+    if (!tasksByFrequency.has(freq)) tasksByFrequency.set(freq, []);
+    tasksByFrequency.get(freq)!.push(entry);
+  }
 
   container.innerHTML = `
     <div class="section">
@@ -592,7 +633,7 @@ function renderMaintenance(): void {
           <h4>${task.name}</h4>
           <p>${task.description}</p>
           <p><strong>Frequency:</strong> ${task.frequency}</p>
-          <p><em>Why it matters: ${task.whyItMatters}</em></p>
+          <p><em>Signs you need this: ${task.signsNeeded[0]}</em></p>
         </div>
       `
         )
@@ -601,16 +642,27 @@ function renderMaintenance(): void {
 
     <div class="section">
       <h3>📅 Full Maintenance Schedule</h3>
-      ${Object.entries(schedule)
+      <p><em>Based on moderate water hardness, ~5 loads/week</em></p>
+      ${Array.from(tasksByFrequency.entries())
         .map(
-          ([freq, tasks]) => `
+          ([freq, entries]) => `
         <h4>${freq.charAt(0).toUpperCase() + freq.slice(1)}</h4>
         <ul>
-          ${(tasks as any[]).map((t: any) => `<li>${t.name}: ${t.description}</li>`).join('')}
+          ${entries.map((e) => `<li>${e.task.name}: ${e.task.description}${e.reason ? ` <em>(${e.reason})</em>` : ''}</li>`).join('')}
         </ul>
       `
         )
         .join('')}
+      ${
+        schedule.nextActions.length > 0
+          ? `
+        <h4>Next Actions</h4>
+        <ul>
+          ${schedule.nextActions.map((a) => `<li>${a}</li>`).join('')}
+        </ul>
+      `
+          : ''
+      }
     </div>
 
     <div class="section">
@@ -624,7 +676,7 @@ function renderMaintenance(): void {
           <details>
             <summary>How to do it</summary>
             <ol>
-              ${task.howTo.map((step) => `<li>${step}</li>`).join('')}
+              ${task.steps.map((step) => `<li>${step}</li>`).join('')}
             </ol>
           </details>
         </div>
@@ -643,6 +695,7 @@ function renderCycles(): void {
   const container = document.getElementById('cycles-content')!;
   const cycles = getAllCycles();
   const education = getAllEducationalContent();
+  const [enzymes, prewash, temperature] = education;
 
   container.innerHTML = `
     <div class="section">
@@ -656,7 +709,7 @@ function renderCycles(): void {
           <p><strong>Duration:</strong> ${cycle.duration}</p>
           <p><strong>Temperature:</strong> ${cycle.temperature}</p>
           <p><strong>Best for:</strong> ${cycle.bestFor.join(', ')}</p>
-          <p><em>Key insight: ${cycle.keyInsight}</em></p>
+          <p><em>${cycle.detergentNotes}</em></p>
         </div>
       `
         )
@@ -668,29 +721,23 @@ function renderCycles(): void {
 
       <h4>🧬 How Enzymes Work</h4>
       <div class="tip">
-        <p><strong>${education.enzymes.title}</strong></p>
-        <p>${education.enzymes.explanation}</p>
-        <ul>
-          ${education.enzymes.keyPoints.map((p) => `<li>${p}</li>`).join('')}
-        </ul>
+        <p><strong>${enzymes.title}</strong></p>
+        <p>${enzymes.content}</p>
+        <p><em>${enzymes.keyTakeaway}</em></p>
       </div>
 
       <h4>💧 Pre-wash Phase</h4>
       <div class="tip">
-        <p><strong>${education.prewash.title}</strong></p>
-        <p>${education.prewash.explanation}</p>
-        <ul>
-          ${education.prewash.keyPoints.map((p) => `<li>${p}</li>`).join('')}
-        </ul>
+        <p><strong>${prewash.title}</strong></p>
+        <p>${prewash.content}</p>
+        <p><em>${prewash.keyTakeaway}</em></p>
       </div>
 
       <h4>🌡️ Temperature Effects</h4>
       <div class="tip">
-        <p><strong>${education.temperature.title}</strong></p>
-        <p>${education.temperature.explanation}</p>
-        <ul>
-          ${education.temperature.keyPoints.map((p) => `<li>${p}</li>`).join('')}
-        </ul>
+        <p><strong>${temperature.title}</strong></p>
+        <p>${temperature.content}</p>
+        <p><em>${temperature.keyTakeaway}</em></p>
       </div>
     </div>
   `;
