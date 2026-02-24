@@ -6,8 +6,15 @@
  * Water Hardness tab was blank in production because getHardnessExplanation was
  * called in demo/main.ts but never imported. Tests that import directly from the
  * source module cannot catch this; tests that import via the barrel can.
+ *
+ * Also includes a demo HTML integrity check to catch duplicate element IDs.
+ * The Water Hardness tab remained blank after the import fix because the panel
+ * div and the Load Advisor select both had id="water-hardness". The browser
+ * returned the select first, so activateTab() never made the panel visible.
  */
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 import {
   getWaterHardnessTest,
@@ -77,5 +84,30 @@ describe('Barrel exports — Water Hardness Helper', () => {
     });
     expect(estimate.likelyHardness).toBe('hard');
     expect(estimate.confidence).toBe('high');
+  });
+});
+
+describe('Demo HTML integrity', () => {
+  const html = readFileSync(resolve(__dirname, '../demo/index.html'), 'utf-8');
+
+  it('has no duplicate element IDs', () => {
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
+    const seen = new Set<string>();
+    const duplicates: string[] = [];
+    for (const id of ids) {
+      if (seen.has(id)) duplicates.push(id);
+      else seen.add(id);
+    }
+    expect(duplicates, `Duplicate IDs found: ${duplicates.join(', ')}`).toEqual([]);
+  });
+
+  it('has a panel element for every tab', () => {
+    const tabIds = [...html.matchAll(/data-tab="([^"]+)"/g)].map((m) => m[1]);
+    for (const tabId of tabIds) {
+      expect(
+        html,
+        `No panel with id="${tabId}" found for tab data-tab="${tabId}"`,
+      ).toContain(`id="${tabId}"`);
+    }
   });
 });

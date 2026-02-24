@@ -203,7 +203,7 @@ document.getElementById('get-recommendation')?.addEventListener('click', () => {
   const urgency = (document.getElementById('urgency') as HTMLSelectElement)
     .value as Urgency;
   const waterHardness = (
-    document.getElementById('water-hardness') as HTMLSelectElement
+    document.getElementById('load-water-hardness') as HTMLSelectElement
   ).value as WaterHardness;
 
   const recommendation = getLoadRecommendation({
