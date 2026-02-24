@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "paths": {
+      "dishmate": ["./src/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "demo/**/*"],
+  "exclude": ["node_modules", "dist", "dist-demo"]
+}
